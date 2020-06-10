@@ -1,6 +1,6 @@
-# The official repository for the Rock the JVM Spark Essentials with Scala course
+# Spark Essentials with Scala course
 
-This repository contains the code we wrote during  [Rock the JVM's Spark Essentials with Scala](https://rockthejvm.com/course/spark-essentials) (Udemy version [here](https://udemy.com/spark-essentials)) Unless explicitly mentioned, the code in this repository is exactly what was caught on camera.
+This repository contains the code I wrote during Spark Essentials with Scala course
 
 ## How to install
 
@@ -24,21 +24,7 @@ Clone this repository and checkout the `start` tag by running the following in t
 git checkout start
 ```
 
-### How to see the final code
-
-Udemy students: checkout the `udemy` branch of the repo:
-```
-git checkout udemy
-```
-
-Premium students: checkout the master branch:
-```
-git checkout master
-```
-
-### How to run an intermediate state
-
-The repository was built while recording the lectures. Prior to each lecture, I tagged each commit so you can easily go back to an earlier state of the repo!
+### lectures
 
 The tags are as follows:
 
@@ -72,12 +58,3 @@ And for premium students, in addition:
 * `7.2-taxi-2`
 * `7.3-taxi-3`
 * `7.4-taxi-4`
-
-When you watch a lecture, you can `git checkout` the appropriate tag and the repo will go back to the exact code I had when I started the lecture.
-
-### For questions or suggestions
-
-If you have changes to suggest to this repo, either
-- submit a GitHub issue
-- tell me in the course Q/A forum
-- submit a pull request!
