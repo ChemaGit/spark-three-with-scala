@@ -17,9 +17,7 @@ object wordcount {
       sc.setLogLevel("ERROR")
       
       // Create a RDD of lines of text in our book
-      val input = sc.textFile("./src/com/chema/resources/book.txt")
-      // /home/chema/IdeaProjects/spark-streaming-spark3-scala/src/com/chema/resources/book.txt
-      // /home/chema/IdeaProjects/spark-streaming-spark3-scala/src/chema/resources/book.txt
+      val input = sc.textFile("./src/com/chema/resources/book.txt")     
       // Use flatMap to convert this into an rdd of each word in each line
       val words = input.flatMap(line => line.split(' '))
       // Convert these words to lowercase

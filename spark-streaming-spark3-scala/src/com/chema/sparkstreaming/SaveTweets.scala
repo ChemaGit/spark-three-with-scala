@@ -57,7 +57,7 @@ object SaveTweets {
     // You can also write results into a database of your choosing, but we'll do that later.
     
     // Set a checkpoint directory, and kick it all off
-    ssc.checkpoint("/home/chema/IdeaProjects/spark-streaming-course/checkpoing")
+    ssc.checkpoint("/home/chema/IdeaProjects/spark-streaming-course/checkpoint")
     ssc.start()
     ssc.awaitTermination()
   }  
