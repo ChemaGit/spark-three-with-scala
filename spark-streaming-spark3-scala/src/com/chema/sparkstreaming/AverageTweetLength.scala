@@ -41,12 +41,19 @@ object AverageTweetLength {
     // these counters are thread-safe.
     var totalTweets = new AtomicLong(0)
     var totalChars = new AtomicLong(0)
+    var longestTweet = new AtomicLong(0)
+    
     
     // In Spark 1.6+, you  might also look into the mapWithState function, which allows
     // you to safely and efficiently keep track of global state with key/value pairs.
     // We'll do that later in the course.
     
     lengths.foreachRDD((rdd, time) => {
+      val longTweet = if(rdd.isEmpty()) 0
+                      else rdd.max()
+     
+      if(longestTweet.get < longTweet) longestTweet.set(longTweet)
+      
       
       var count = rdd.count()
       if (count > 0) {
@@ -54,9 +61,10 @@ object AverageTweetLength {
         
         totalChars.getAndAdd(rdd.reduce((x,y) => x + y))
         
-        println("Total tweets: " + totalTweets.get() + 
-            " Total characters: " + totalChars.get() + 
-            " Average: " + totalChars.get() / totalTweets.get())
+        println(s"Total tweets: ${totalTweets.get()}" +
+           s" Total characters: ${totalChars.get()}" + 
+           s" Average: ${totalChars.get() / totalTweets.get()}" +
+           s" Longest Tweet: ${longestTweet.get()}")
       }
     })
     
