@@ -53,7 +53,7 @@ object PopularHashtags {
     
     // Set a checkpoint directory, and kick it all off
     // I could watch this all day!
-    ssc.checkpoint("C:/checkpoint/")
+    ssc.checkpoint("/home/chema/IdeaProjects/spark-streaming-course/checkpoint")
     ssc.start()
     ssc.awaitTermination()
   }  
