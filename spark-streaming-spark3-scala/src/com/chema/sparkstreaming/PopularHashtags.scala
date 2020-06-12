@@ -37,8 +37,12 @@ object PopularHashtags {
     // Now eliminate anything that's not a hashtag
     val hashtags = tweetwords.filter(word => word.startsWith("#"))
     
+    val wordValues = tweetwords
+      .map(w => (w, 1))
+      .reduceByKeyAndWindow( (x,y) => x + y, (x,y) => x - y, Seconds(200), Seconds(2))
+    
     // Map each hashtag to a key/value pair of (hashtag, 1) so we can count them up by adding up the values
-    val hashtagKeyValues = hashtags.map(hashtag => (hashtag, 1))
+    val hashtagKeyValues = hashtags.map(hashtag => (hashtag, 1))    
     
     // Now count them up over a 5 minute window sliding every one second
     val hashtagCounts = hashtagKeyValues.reduceByKeyAndWindow( (x,y) => x + y, (x,y) => x - y, Seconds(300), Seconds(1))
@@ -48,8 +52,11 @@ object PopularHashtags {
     // Sort the results by the count values
     val sortedResults = hashtagCounts.transform(rdd => rdd.sortBy(x => x._2, false))
     
+    val sortedWords = wordValues.transform(rdd => rdd.sortBy(x => x._2, false))
+    
     // Print the top 10
-    sortedResults.print
+    s"Popular hastag: ${sortedResults.print}"
+    s"Popular Word: ${sortedWords.print}"
     
     // Set a checkpoint directory, and kick it all off
     // I could watch this all day!
