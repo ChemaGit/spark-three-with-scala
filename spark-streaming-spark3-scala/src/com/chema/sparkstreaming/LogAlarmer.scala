@@ -29,7 +29,6 @@ object LogAlarmer {
     val host = args(1)
     val port = args(2).toInt
     
-    try {
       // Create the context with a 1 second batch size
       val ssc = new StreamingContext("local[*]", "LogAlarmer", Seconds(window))
       
@@ -72,48 +71,52 @@ object LogAlarmer {
       
       // For each batch, get the RDD's representing data from our current window
       statusCounts.foreachRDD((rdd, time) => {    
-       
-        // Keep track of total success and error codes from each RDD
-        var totalSuccess:Long = 0
-        var totalError:Long = 0
-  
-        if (rdd.count() > 0) {        
-          val elements = rdd.collect()
-          for (element <- elements) {
-            val result = element._1
-            val count = element._2
-            if (result == "Success") {
-              totalSuccess += count
-            }
-            if (result == "Failure") {
-              totalError += count
+       try {
+          // Keep track of total success and error codes from each RDD
+          var totalSuccess:Long = 0
+          var totalError:Long = 0
+    
+          if (rdd.count() > 0) {        
+            val elements = rdd.collect()
+            for (element <- elements) {
+              val result = element._1
+              val count = element._2
+              if (result == "Success") {
+                totalSuccess += count
+              }
+              if (result == "Failure") {
+                totalError += count
+              }
             }
           }
-        }
-  
-        // Print totals from current window
-        println("Total success: " + totalSuccess + " Total failure: " + totalError)
-        
-        // Don't alarm unless we have some minimum amount of data to work with
-        if (totalError + totalSuccess > 100) {
-          currentTime = System.currentTimeMillis()
-          if(currentTime - timePass >= halfAnHour) {
-            // Compute the error rate
-            // Note use of util.Try to handle potential divide by zero exception
-            val ratio:Double = util.Try( totalError.toDouble / totalSuccess.toDouble ) getOrElse 1.0
-            // If there are more errors than successes, wake someone up
-            if (ratio > 0.5) {
-              // In real life, you'd use JavaMail or Scala's courier library to send an
-              // email that causes somebody's phone to make annoying noises, and you'd
-              // make sure these alarms are only sent at most every half hour or something.
-              println("Wake somebody up! Something is horribly wrong.")
-            } else {
-              println("All systems go.")
-            }
+    
+          // Print totals from current window
+          println("Total success: " + totalSuccess + " Total failure: " + totalError)
+          
+          // Don't alarm unless we have some minimum amount of data to work with
+          if (totalError + totalSuccess > 100) {
             currentTime = System.currentTimeMillis()
-            timePass = System.currentTimeMillis()
+            if(currentTime - timePass >= halfAnHour) {
+              // Compute the error rate
+              // Note use of util.Try to handle potential divide by zero exception
+              val ratio:Double = util.Try( totalError.toDouble / totalSuccess.toDouble ) getOrElse 1.0
+              // If there are more errors than successes, wake someone up
+              if (ratio > 0.5) {
+                // In real life, you'd use JavaMail or Scala's courier library to send an
+                // email that causes somebody's phone to make annoying noises, and you'd
+                // make sure these alarms are only sent at most every half hour or something.
+                println("Wake somebody up! Something is horribly wrong.")
+              } else {
+                println("All systems go.")
+              }
+              currentTime = System.currentTimeMillis()
+              timePass = System.currentTimeMillis()
+            }
           }
-        }
+       } catch {
+          case j: java.net.ConnectException => System.err.println(j.getMessage)
+          case e: java.lang.Exception => System.err.println(e.getMessage)      
+        }      
       })
     
       // Also in real life, you'd need to monitor the case of your site freezing entirely
@@ -124,10 +127,6 @@ object LogAlarmer {
       ssc.checkpoint("/home/chema/IdeaProjects/spark-streaming-course/checkpoint")
       ssc.start()
       ssc.awaitTermination()
-    } catch {
-      case j: java.net.ConnectException => System.err.println(j.getMessage)
-      case e: java.lang.Exception => System.err.println(e.getMessage)      
-    }      
    }
 }
 
