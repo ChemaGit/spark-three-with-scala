@@ -21,16 +21,16 @@ object LogAlarmer {
   def main(args: Array[String]) {
     
     if(args.length != 3) {
-      println(System.err.println("Usage: <window length> <host> <port>"))
+      println(System.err.println("Usage: <batch_size> <host> <port>"))
       System.exit(-1)
     }
     
-    val window = args(0).toInt
+    val batch_size = args(0).toInt
     val host = args(1)
     val port = args(2).toInt
     
       // Create the context with a 1 second batch size
-      val ssc = new StreamingContext("local[*]", "LogAlarmer", Seconds(window))
+      val ssc = new StreamingContext("local[*]", "LogAlarmer", Seconds(batch_size))
       
       setupLogging()
       
