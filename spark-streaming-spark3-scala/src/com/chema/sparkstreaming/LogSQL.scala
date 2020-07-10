@@ -4,7 +4,7 @@ package com.chema.sparkstreaming
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext, Time}
 import org.apache.spark.storage.StorageLevel
-import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.{SparkSession,SaveMode}
 import org.apache.spark.rdd.RDD
 
 import java.util.regex.Pattern
@@ -78,6 +78,10 @@ object LogSQL {
       // org.apache.spark.sql.DataFrameWriter class! It can write dataframes via
       // jdbc and many other formats! You can use the "append" save mode to keep
       // adding data from each batch.
+      requestsDataFrame
+      .write
+      .mode(SaveMode.Append)
+      .json("/home/chema")
     })
     
     // Kick it off

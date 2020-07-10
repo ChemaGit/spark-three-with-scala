@@ -26,7 +26,7 @@ object LogParser {
     val pattern = apacheLogPattern()
 
     // Create a socket stream to read log data published via netcat on port 9999 locally
-    // nc -lk 9999 < /home/chema/IdeaProjects/spark-streaming-course/access_log.txt
+    // nc -lk 9999 < /home/chema/IdeaProjects/spark-streaming-course/logs/access_log.txt
     val lines = ssc.socketTextStream("127.0.0.1", 9999, StorageLevel.MEMORY_AND_DISK_SER)
     
     // Extract the request field from each log line

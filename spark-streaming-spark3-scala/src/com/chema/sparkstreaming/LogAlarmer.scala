@@ -39,7 +39,7 @@ object LogAlarmer {
 
     
       // Create a socket stream to read log data published via netcat on port 9999 locally
-      // nc -lk 9999 < /home/chema/IdeaProjects/spark-streaming-course/access_log.txt
+      // nc -lk 9999 < /home/chema/IdeaProjects/spark-streaming-course/logs/access_log.txt
       val lines = ssc.socketTextStream(host, port, StorageLevel.MEMORY_AND_DISK_SER)
       
       // Extract the status field from each log line
@@ -62,10 +62,10 @@ object LogAlarmer {
       })
       
       // Tally up statuses over a 5-minute window sliding every second
-      val statusCounts = successFailure.countByValueAndWindow(Seconds(300), Seconds(1))
+      val statusCounts = successFailure.countByValueAndWindow(Seconds(300), Seconds(2))
       
       //TODO: Improve this script by ensuring alarms are not issued more often than every half hour
-      val halfAnHour = 1800000
+      val halfAnHour = 10000
       var currentTime = System.currentTimeMillis()
       var timePass = System.currentTimeMillis()
       
