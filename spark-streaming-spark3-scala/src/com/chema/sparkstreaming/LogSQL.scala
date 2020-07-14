@@ -81,7 +81,7 @@ object LogSQL {
       requestsDataFrame
       .write
       .mode(SaveMode.Append)
-      .json("/home/chema")
+      .json("/home/chema/IdeaProjects/spark-streaming-course/sql_json")
     })
     
     // Kick it off
