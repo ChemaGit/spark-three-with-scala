@@ -31,7 +31,7 @@ object StructuredStreaming {
               val date = (dateFormat.parse(dateString))
               val timestamp = new java.sql.Timestamp(date.getTime());
               Option(timestamp.toString())
-          } else {
+       } else {
           None
       }
    }
