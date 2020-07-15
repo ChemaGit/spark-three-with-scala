@@ -15,6 +15,15 @@ import Utilities._
 import org.apache.spark.streaming.kafka._
 import kafka.serializer.StringDecoder
 
+/**
+ * Start kafka server
+ * Create a topic
+ * kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic testLogs
+ * Run a Kafka producer
+ * kafka-console-producer --broker-list localhost:9092 --topic testLogs < /home/chema/IdeaProjects/spark-streaming-course/access_log.txt
+ * Run Scala Application
+ */
+
 /** Working example of listening for log data from Kafka's testLogs topic on port 9092. */
 object KafkaExample {
   
