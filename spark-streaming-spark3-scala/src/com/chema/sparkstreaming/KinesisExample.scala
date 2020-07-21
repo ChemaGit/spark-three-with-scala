@@ -1,4 +1,4 @@
-// Flume setup steps (and more) at http://spark.apache.org/docs/latest/streaming-flume-integration.html
+// Kinesis setup steps (and more) at http://spark.apache.org/docs/latest/streaming-kinesis-integration.html
 
 package com.chema.sparkstreaming
 
@@ -11,29 +11,31 @@ import java.util.regex.Matcher
 
 import Utilities._
 
-import org.apache.spark.streaming.flume._
-
-/** Example of connecting to Flume log data, in a "pull" configuration. */
-object FlumePullExample {
+ import org.apache.spark.streaming.Duration
+ import org.apache.spark.streaming.kinesis._
+ import com.amazonaws.services.kinesis.clientlibrary.lib.worker.InitialPositionInStream
+ 
+/** Example of connecting to Amazon Kinesis Streaming and listening for log data. */
+object KinesisExample {
   
   def main(args: Array[String]) {
 
     // Create the context with a 1 second batch size
-    val ssc = new StreamingContext("local[*]", "FlumePullExample", Seconds(1))
+    val ssc = new StreamingContext("local[*]", "KinesisExample", Seconds(1))
     
     setupLogging()
     
     // Construct a regular expression (regex) to extract fields from raw Apache log lines
     val pattern = apacheLogPattern()
 
-    // The only difference from the push example is that we use createPollingStream instead of createStream.
-    val flumeStream = FlumeUtils.createPollingStream(ssc, "localhost", 9092,StorageLevel.MEMORY_ONLY)
-    
-    // This creates a DStream of SparkFlumeEvent objects. We need to extract the actual messages.
-    // This assumes they are just strings, like lines in a log file.
-    // In addition to the body, a SparkFlumeEvent has a schema and header you can get as well. So you
-    // could handle structured data if you want.
-    val lines = flumeStream.map(x => new String(x.event.getBody().array()))
+    // Create a Kinesis stream. You must create an app name unique for this region, and specify
+    // stream name, Kinesis endpoint, and region you want. 
+    val kinesisStream = KinesisUtils.createStream(
+     ssc, "Unique App Name", "Stream Name", "kinesis.us-east-1.amazonaws.com",
+     "us-east-1", InitialPositionInStream.LATEST, Duration(2000), StorageLevel.MEMORY_AND_DISK_2)
+     
+    // This gives you a byte array for each message. Let's assume these represent strings.
+    val lines = kinesisStream.map(x => new String(x))
     
     // Extract the request field from each log line
     val requests = lines.map(x => {val matcher:Matcher = pattern.matcher(x); if (matcher.matches()) matcher.group(5)})
