@@ -458,7 +458,7 @@ where some of those objects are not serializable.
 For each non-serializable node on this graph, we have two options:
 
   1. Make the node implement Serializable.
-  2. 
+  2. Detach the node from the graph.
 
 Of the 3 tactics described earlier, each is a specific way of achieving one of these options:
 
