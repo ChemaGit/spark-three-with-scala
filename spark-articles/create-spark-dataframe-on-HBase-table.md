@@ -55,6 +55,6 @@ hbase(main):007:0> put 'employee', '1000','personal:city','St.Augustine'
 hbase(main):007:0> put 'employee', '1000','professional:designation','Sr. Technical Architect1'
 0 row(s) in 0.0040 seconds
 
-hbase(main):007:0> put 'employee', '1000','professional:salary','Raju 125000'
+hbase(main):007:0> put 'employee', '1000','professional:salary','125000'
 0 row(s) in 0.0040 seconds
 ````
