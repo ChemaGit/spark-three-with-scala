@@ -24,3 +24,37 @@ Given below is a sample schema of a table named “employee”.
 It has two column families: “personal” and “professional”.
 ````
 ![alt text](hbase_table.png)
+````text
+You can create this table using HBase shell as shown below.
+````
+````shell script
+hbase(main):005:0> create 'employee', 'personal', 'professional'
+0 row(s) in 1.2670 seconds
+
+=> Hbase::Table - employee
+hbase(main):006:0> list
+TABLE
+
+employee
+````
+
+### Step 2. Insert Data into employee table
+````text
+You can insert data into HBase table using Java API or HBase Shell.
+
+- 2.1. Insert Data Using HBase Shell.
+  Using put command, you can insert rows into an HBase table.
+````
+````shell script
+hbase(main):007:0> put 'employee', '1000','personal:name','Raju Karappan'
+0 row(s) in 0.2670 seconds
+
+hbase(main):007:0> put 'employee', '1000','personal:city','St.Augustine'
+0 row(s) in 0.0040 seconds
+
+hbase(main):007:0> put 'employee', '1000','professional:designation','Sr. Technical Architect1'
+0 row(s) in 0.0040 seconds
+
+hbase(main):007:0> put 'employee', '1000','professional:salary','Raju 125000'
+0 row(s) in 0.0040 seconds
+````
