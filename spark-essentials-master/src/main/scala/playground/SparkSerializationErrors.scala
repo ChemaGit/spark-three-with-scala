@@ -20,7 +20,7 @@ class SparkSerializationErrors(spark: SparkSession, nRotations: Integer) {
 
   def run(): Unit =
     spark
-      .sql("SELECT 'Hello World!' as text")
+      .sql("SELECT '0123456' as text")
       .withColumn("rotated_text", rotateStringUdf($"text"))
       .show()
 
