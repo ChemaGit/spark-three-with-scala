@@ -58,7 +58,9 @@ object ComplexTypes extends App {
 
   // Arrays
 
-  val moviesWithWords = moviesDF.select(col("Title"), split(col("Title"), " |,").as("Title_Words")) // ARRAY of strings
+  val moviesWithWords = moviesDF.select(col("Title"), split(col("Title"), " |,|:").as("Title_Words")) // ARRAY of strings
+
+  moviesWithWords.show(100, truncate = false)
 
   moviesWithWords.select(
     col("Title"),
