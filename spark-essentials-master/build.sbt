@@ -18,9 +18,15 @@ resolvers ++= Seq(
 libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % sparkVersion,
   "org.apache.spark" %% "spark-sql" % sparkVersion,
-  // logging
+  "org.apache.hbase" % "hbase-common" % "2.2.5",
+  "org.apache.hbase" % "hbase-client" % "2.2.5",
+  "org.apache.hbase" % "hbase-server" % "2.2.5",
+  "org.apache.hbase" % "hbase-protocol" % "2.2.5",
+// logging
   "org.apache.logging.log4j" % "log4j-api" % "2.4.1",
   "org.apache.logging.log4j" % "log4j-core" % "2.4.1",
   // postgres for DB connectivity
   "org.postgresql" % "postgresql" % postgresVersion
 )
+
+
