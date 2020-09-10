@@ -13,6 +13,7 @@ object SparkJobAnatomy extends App {
     *
     * We will keep the code here for posterity so you can reference it later.
     * You can copy these expressions and paste them (even multi-line) into the Spark shell.
+    *
     */
 
   val spark = SparkSession.builder()
