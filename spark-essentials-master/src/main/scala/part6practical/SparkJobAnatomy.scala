@@ -27,7 +27,7 @@ object SparkJobAnatomy extends App {
 
   // start cluster
   // docker-compose up --scale spark-worker=3
-  // in another terminal: docker-exec -it spark-cluster_spark-master_1 bash
+  // in another terminal: docker exec -it spark-cluster_spark-master_1 bash
 
   val rdd1 = sc.parallelize(1 to 1000000)
   rdd1.count
