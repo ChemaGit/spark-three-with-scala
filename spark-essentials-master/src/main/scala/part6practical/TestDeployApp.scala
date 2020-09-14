@@ -4,7 +4,7 @@ import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.apache.spark.sql.functions._
 
 
-object TestDeployApp {
+object  TestDeployApp {
 
   def main(args: Array[String]): Unit = {
     /**
@@ -69,10 +69,30 @@ object TestDeployApp {
     * 3. Run the spark-submit command
     *   /spark/bin/spark-submit \
     *     --class part6practical.TestDeployApp \
-    *     --master spark://(dockerID):7077 \
+    *     --master spark://4aa666b33577:7077 \
     *     --deploy-mode client \
     *     --verbose \
     *     --supervise \
     *     spark-essentials.jar /opt/spark-data/movies.json /opt/spark-data/goodMovies
+    *
+    *
+    *
+    *
+    * ./bin/spark-submit \
+    * --class part6practical.TestDeployApp \
+    * --master spark://4aa666b33577:7077 \
+    * --deploy-mode client \
+    * --verbose \
+    * --supervise \
+    * /opt/spark-apps/spark-essentials.jar /opt/spark-data/movies.json /opt/spark-data/goodMovies
     */
 }
+/*
+./bin/spark-submit \
+--class part6practical.TestDeployApp \
+--master spark://4aa666b33577:7077 \
+--deploy-mode client \
+--verbose \
+--supervise \
+/opt/spark-apps/spark-essentials.jar /opt/spark-data/movies.json /opt/spark-data/goodMovies
+*/
