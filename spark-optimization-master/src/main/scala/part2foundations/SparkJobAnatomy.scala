@@ -24,7 +24,7 @@ object SparkJobAnatomy {
     * 1. Navigate to the spark-optimization folder, go to spark-cluster/
     * 2. docker-compose up --scale spark-worker=3
     * 3. In another terminal:
-    *    - docker-exec -it spark-cluster_spark-master_1 bash
+    *    - docker exec -it spark-cluster_spark-master_1 bash
     *    - cd spark/bin
     *    - ./spark-shell
     * 4. In (yet) another terminal:
