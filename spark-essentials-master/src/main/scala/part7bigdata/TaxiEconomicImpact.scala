@@ -5,6 +5,14 @@ import org.apache.spark.sql.functions._
 
 object TaxiEconomicImpact {
 
+  /**
+    * $ spark-submit --class part7bigdata.TaxiEconomicImpact \
+    * --supervise \
+    * --verbose \
+    * spark-essentials.jar s3://rtjvm/NYC_taxi_2009-2016.parquet s3://rtjvm/taxi_zones.csv s3://rtjvm/economicImpact
+    *
+    * @param args
+    */
   def main(args: Array[String]): Unit = {
 
     if (args.length != 3) {
