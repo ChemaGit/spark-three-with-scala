@@ -33,7 +33,7 @@ object TestDeployApp {
       .orderBy($"Rating".desc_nulls_last)
 
     // method 2
-    spark.conf.set("spark.executor.memory", "1g") // warning - not all configurations available
+    // spark.conf.set("spark.executor.memory", "1g") // warning - not all configurations available
 
     /*
       method 3: pass configs as command line arguments:
