@@ -48,13 +48,18 @@ object ScalaRecap extends App {
   // map, flatMap, filter
   val processedList = List(1,2,3).map(incrementer)
 
+  println(processedList)
+
   // Pattern Matching
   val unknown: Any = 45
   val ordinal = unknown match {
     case 1 => "first"
     case 2 => "second"
+    case 45 => "forty-fifth"
     case _ => "unknown"
   }
+
+  println(ordinal)
 
   // try-catch
   try {
