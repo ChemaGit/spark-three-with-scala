@@ -21,10 +21,11 @@ object StreamingDatasets {
     spark.readStream
       .format("socket")
       .option("host", "localhost")
-      .option("port", 12345)
+      .option("port", 50050) // start nc in terminal --> nc -lk 50050
       .load() // DF with single string column "value"
       .select(from_json(col("value"), carsSchema).as("car")) // composite column (struct)
       .selectExpr("car.*") // DF with multiple columns
+      //.as[Car](carEncoder) // encoder can be passed explicitly
       .as[Car] // encoder can be passed implicitly with spark.implicits
   }
 
@@ -89,6 +90,8 @@ object StreamingDatasets {
   }
 
   def main(args: Array[String]): Unit = {
-    ex3()
+    ex1()
+    // ex2()
+    // ex3()
   }
 }
