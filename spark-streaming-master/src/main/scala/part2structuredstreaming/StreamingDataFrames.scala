@@ -18,7 +18,7 @@ object StreamingDataFrames {
     val lines: DataFrame = spark.readStream
       .format("socket")
       .option("host", "localhost")
-      .option("port", 12345)
+      .option("port", 50050)
       .load()
 
     // transformation
@@ -56,7 +56,7 @@ object StreamingDataFrames {
     val lines: DataFrame = spark.readStream
       .format("socket")
       .option("host", "localhost")
-      .option("port", 12345)
+      .option("port", 50050)
       .load()
 
     // write the lines DF at a certain trigger
@@ -73,6 +73,9 @@ object StreamingDataFrames {
   }
 
   def main(args: Array[String]): Unit = {
-    demoTriggers()
+    spark.sparkContext.setLogLevel("ERROR")
+    // demoTriggers()
+    readFromSocket
+    // readFromFiles
   }
 }
